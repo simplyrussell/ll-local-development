@@ -1,3 +1,3 @@
-# STUD Pitch Deck
+# Modern Local Development
 
 Created with reveal.js
