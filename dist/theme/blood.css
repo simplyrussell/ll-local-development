@@ -388,3 +388,10 @@ section.has-light-background p, section.has-light-background h1, section.has-lig
 .reveal small code {
   vertical-align: baseline;
 }
+
+/**
+ * Custom SimplyPHP
+ */
+ul {
+  list-style: none;
+}

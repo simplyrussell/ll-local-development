@@ -1,59 +1,179 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Development in Local Environment | Lunch & Learn</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/blood.css">
+    <title>Development in Local Environment | Lunch & Learn</title>
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>
-                    <h2>Development in Local Environment</h2>
-                    <div class="fragment" style="text-align:right;">
-                        <span>
-                            <span style="position:relative;top:-50px;">with Russell Jones</span>
-                            <img src="./images/cartoon-russell.jpg" alt="Russell Jones Avatar" style="border-radius: 50%;width:100px;height:100px;">
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/blood.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <style type="text/css">
+        ul {
+            list-style: none !important;
+            list-style-type: none !important;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h2>Development in Local Environment</h2>
+                <div class="fragment" style="text-align:right;">
+                    <span>
+                        <span style="position:relative;top:-50px;">with Russell Jones</span>
+                        <img src="./images/cartoon-russell.jpg" alt="Russell Jones Avatar"
+                            style="border-radius: 50%;width:100px;height:100px;">
                         </p>
-                    </div>
+                </div>
+            </section>
+
+            <section>
+                <section>
+                    <h2>Local Dev Environment Setup is Hard🐉</h2>
+                    <aside class="notes">
+                        Challenges of local dev
+                    </aside>
                 </section>
                 <section>
-                    Setting up a local dev environment is hard
+                    <h2>The Stacks</h2>
+                    <p class="fragment">Windows / Mac / Linux</p>
+                    <p class="fragment">WAMP / MAMP / LAMP</p>
+                    <p class="fragment">Linux Apache MySQL PHP</p>
                 </section>
-				<section>Terminal / CLI</section>
-                <section>Laravel</section>
-                <section>NodeJS</section>
-                <section>Version Control</section>
-                <section>LAMP Stack</section>
-				<section>Docker</section>
-                <section>VSCode</section>
-                <section>Kubernetes</section>
-                <section>Outro</section>
-			</div>
-		</div>
+            </section>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+            <section>
+                <h2>Where do we Stack?</h2>
+                <h3 class="fragment">Bare Metal</h3>
+                <ul class="fragment">
+                    <li>❌ Outdated packages</li>
+                    <li class="fragment">❌ Different projects require different environments</li>
+                    <li class="fragment">❌ Difficult to maintain</li>
+                </ul>
+            </section>
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+            <section>
+                <h2>Where do we Stack?</h2>
+                <h3>Virtual Machines</h3>
+                <ul>
+                    <li class="fragment">✅ Like having multiple computers</li>
+                    <li class="fragment">✅ Self contained</li>
+                    <li class="fragment">❌ Requires large slices of CPU/RAM/HDD</li>
+                    <li class="fragment">❌ Long to setup / Difficult to share</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Containers</h2>
+                <ul>
+                    <li class="fragment">✅ Like having multiple computers</li>
+                    <li class="fragment">✅ Self contained</li>
+                    <li class="fragment">✅ Lightweight - Shared resources with host</li>
+                    <li class="fragment">🥧 Quick to setup / Simple to share</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2><span class="fragment highlight-green">Docker</span> / LXC</h2>
+                <blockquote>
+                    Docker is an open source containerization platform. It enables
+                    developers to package applications into containers—standardized
+                    executable components combining application source code with the
+                    operating system (OS) libraries and dependencies required to run
+                    that code in any environment.
+                </blockquote>
+                <aside class="notes">
+                    Windows - WSL2
+                    <br />
+                    Docker Desktop
+                    <br />
+                </aside>
+            </section>
+
+            <section>
+                <h2>Dockerfile</h2>
+                <pre class="fragment">
+                    <code data-trim data-noescape>FROM nginx</code>
+                </pre>
+                <aside class="notes">
+                    https://hub.docker.com/_/nginx
+                    <br />
+                    Demonstrate building, tagging, pushing
+                    <br/>
+                    docker run -it --rm -d -p 8080:80 --name web nginx
+                    <br/>
+                    docker run -it --rm -d -p 8080:80 --name web -v ~/site-content:/usr/share/nginx/html nginx
+                    Portainer (GUI)
+                    <br />
+                    <code>
+                        docker volume create portainer_data
+                    </code>
+                    <br/>
+                    <code>
+                        docker run -d -p 8000:8000 -p 9443:9443 --name portainer \
+                            --restart=always \
+                            -v /var/run/docker.sock:/var/run/docker.sock \
+                            -v portainer_data:/data \
+                            portainer/portainer-ce:2.9.3
+                    </code>
+                    <br/>
+                    
+                </aside>
+            </section>
+
+            <section>
+                <h2>Laravel Sail ⛵</h2>
+                <ul>
+                    <li class="">Uses Docker</li>
+                    <li class="fragment">Docker Compose</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>VSCode</h2>
+                <ul>
+                    <li class="fragment">devcontainer</li>
+                </ul>
+                <aside class="notes">
+                    code-server
+                </aside>
+            </section>
+
+            <section>
+                <h2>Thank you for Lunching & Learning 😊</h2>
+                <ul>
+                    <li>roadmap.sh</li>
+                    <li>Questions?</li>
+                    <li>Care to share?</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            hash: true,
+
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
 </html>
